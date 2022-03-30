@@ -5,6 +5,8 @@ case "$1" in
 		mvn clean
 		mvn install -DskipTests
 		cd ..
+		mvn clean
+		mvn install -DskipTests
         ;;
         "--build") 
 		mvn clean
