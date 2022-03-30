@@ -1,0 +1,15 @@
+FROM maven:3.6-jdk-11 as builder
+COPY . /usr/src/converter
+WORKDIR /usr/src/converter
+RUN git clone --recurse-submodules https://github.com/cefriel/chimera.git
+RUN cd chimera && mvn install -DskipTests
+RUN mvn clean install
+
+FROM openjdk:11-jdk
+COPY --from=builder /usr/src/converter/target/chimera-tutorial-1.0.0.jar /home/chimera-tutorial-1.0.0.jar
+WORKDIR /home/
+COPY src/main/resources /home/
+COPY lifting /home/
+COPY lowering /home/
+
+ENTRYPOINT ["java","-Xmx4g","-jar","/home/chimera-tutorial-1.0.0.jar"]

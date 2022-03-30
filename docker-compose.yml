@@ -1,0 +1,20 @@
+version: '2.2'
+
+services:
+  chimera-tutorial: 
+    image: cefriel/chimera-tutorial
+    build: 
+        context: ./
+    mem_limit: 4g
+    volumes:
+      - ./src/main/resources/routes/camel-context.xml:/home/routes/camel-context.xml
+      - ./lifting/mappings.rml.ttl:/home/mappings.rml.ttl
+      - ./lowering/template.vm:/home/template.vm
+    ports:
+      - 8888:8888
+    networks:
+      - chimera-net
+
+networks:
+  chimera-net:
+    driver: bridge
