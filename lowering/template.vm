@@ -32,4 +32,5 @@ stop_id,stop_code,stop_name,stop_desc,stop_lat,stop_lon,zone_id,stop_url,locatio
 }" )
 #set( $queryStop = "$prefixes$stop" )
 #set( $stops = $reader.executeQueryStringValue($queryStop) )
+#set( $setPrefix = $functions.setPrefix("https://www.cefriel.com/data/"))
 #if(!$stops.isEmpty())#foreach($s in $stops)#if($s.stop_id)$s.stop_id#end,#if($s.stop_code)$s.stop_code#end,#if($s.stop_name)$s.stop_name#end,#if($s.stop_desc)$s.stop_desc#end,#if($s.stop_lat)$s.stop_lat#end,#if($s.stop_lon)$s.stop_lon#end,#if($s.zone_id)$s.zone_id#end,#if($s.stop_url)$s.stop_url#end,#if($s.location_type)$functions.sp($s.location_type,'resource/LocationType/')#end,#if($s.parent_station)$functions.rp($s.parent_station)#end,#if($s.stop_timezone)$s.stop_timezone#end,#if($s.wheelchair_boarding)$functions.sp($s.wheelchair_boarding,'/resource/WheelchairBoardingStatus/')#end,,$functions.newline()#end#end

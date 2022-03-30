@@ -5,29 +5,29 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://sprint-transport.eu/data/AMV> a gtfs:Stop;
+<https://www.cefriel.com/data/AMV> a gtfs:Stop;
   foaf:page "http://my-source.com/stops/AMV".
 
-<http://sprint-transport.eu/data/BEATTY_AIRPORT> a gtfs:Stop;
+<https://www.cefriel.com/data/BEATTY_AIRPORT> a gtfs:Stop;
   foaf:page "http://my-source.com/stops/BEATTY_AIRPORT".
 
-<http://sprint-transport.eu/data/BULLFROG> a gtfs:Stop;
+<https://www.cefriel.com/data/BULLFROG> a gtfs:Stop;
   foaf:page "http://my-source.com/stops/BULLFROG".
 
-<http://sprint-transport.eu/data/DADAN> a gtfs:Stop;
+<https://www.cefriel.com/data/DADAN> a gtfs:Stop;
   foaf:page "http://my-source.com/stops/DADAN".
 
-<http://sprint-transport.eu/data/EMSI> a gtfs:Stop;
+<https://www.cefriel.com/data/EMSI> a gtfs:Stop;
   foaf:page "http://my-source.com/stops/EMSI".
 
-<http://sprint-transport.eu/data/FUR_CREEK_RES> a gtfs:Stop;
+<https://www.cefriel.com/data/FUR_CREEK_RES> a gtfs:Stop;
   foaf:page "http://my-source.com/stops/FUR_CREEK_RES".
 
-<http://sprint-transport.eu/data/NADAV> a gtfs:Stop;
+<https://www.cefriel.com/data/NADAV> a gtfs:Stop;
   foaf:page "http://my-source.com/stops/NADAV".
 
-<http://sprint-transport.eu/data/NANAA> a gtfs:Stop;
+<https://www.cefriel.com/data/NANAA> a gtfs:Stop;
   foaf:page "http://my-source.com/stops/NANAA".
 
-<http://sprint-transport.eu/data/STAGECOACH> a gtfs:Stop;
+<https://www.cefriel.com/data/STAGECOACH> a gtfs:Stop;
   foaf:page "http://my-source.com/stops/STAGECOACH".

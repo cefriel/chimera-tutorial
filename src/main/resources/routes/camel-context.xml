@@ -17,6 +17,10 @@
         <value>./mappings.rml.ttl</value>
       </util:list>
     </property>
+    <property name="baseIRI">
+        <value>https://www.cefriel.com/data/</value>
+    </property>
+    <property name="baseIRIPrefix" value="cef"/>
   </bean>
   <bean class="com.cefriel.chimera.processor.enrich.UrlDataEnricher" id="url_enricher"/>
   <bean class="com.cefriel.chimera.processor.enrich.ConstructQueryEnricher" id="construct_enricher">
