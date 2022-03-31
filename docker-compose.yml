@@ -2,7 +2,7 @@ version: '2.2'
 
 services:
   chimera-tutorial: 
-    image: cefriel/chimera-tutorial
+    image: cefriel/chimera:tutorial
     build: 
         context: ./
     mem_limit: 4g

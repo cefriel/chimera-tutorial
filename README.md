@@ -2,23 +2,45 @@
 
 The `chimera-tutorial` project offers a complete example to easily understand how to develop semantic data transformation pipelines using the [Chimera](https://github.com/cefriel/chimera) framework.
 
+## TL;DR
+
+Launch the `chimera-tutorial` pipelines with Docker
+```
+docker run -p 8888:8888 cefriel/chimera:tutorial
+```
+Follow the instructions in the ["Try it" section](#Try it) or simply run the `tutorial.sh` script with one of the following arguments: `lift`, `construct`, `conversion`, `enrich`, `load-enrich`, `inference`. 
+The result of each operation is saved in the `outbox` folder.
+
 ## Chimera pipeline configuration
+
+A standard Chimera pipeline can be composed of four blocks:
+
+- *Lifting*: this block takes a structured message as input, and enriches the RDF graph with the triples obtained by applying mapping rules to the input.
+- *Data enricher*: this block loads a set of RDF files, or generates a set of triples (e.g., SPARQL Construct query) and loads them into the RDF graph.
+- *Inference enricher*: this block loads a set of ontology files into the RDF graph, inference rules can generate additional triples enriching the graph.
+- *Lowering*: this block applies mapping rules to extract data from the RDF graph and produce a structured message as output.
+
+<p align="left"><img src="img/chimera-pipeline.png" alt="Standard pipeline" width="800"></p>
 
 The  `chimera-tutorial`  defines semantic data transformation pipelines considering a sample [GTFS](https://developers.google.com/transit/gtfs) feed as input and the [Linked GTFS](https://github.com/OpenTransport/linked-gtfs) vocabulary as the reference ontology.
 
+The  `chimera-tutorial` exploits an in-memory RDF graph, however, Chimera can be configured to work with a remote Triplestore.
+
 The  `chimera-tutorial` project is configured to expose multiple [Chimera pipelines](src/main/resources/routes/camel-context.xml) as different endpoints ([Camel Rest](https://camel.apache.org/components/3.15.x/rest-component.html) configuration):
 
-- `/lift` : RML mappings in the `lifting` folder are applied on the incoming GTFS feed through the `chimera-rml` block
-- `/roundtrip/gtfs/` defines a semantic converter for a roundtrip conversion:
+- `/lift/gtfs`: RML mappings in the `lifting` folder are applied on the incoming GTFS feed through the `chimera-rml` block
+- `/roundtrip/gtfs` defines a semantic converter for a roundtrip conversion:
   - RML mappings in the `lifting` folder are applied on the incoming GTFS feed through the `chimera-rml` block to materialise a KG, 
   - the Velocity+SPARQL template in the `lowering` folder are applied through the `chimera-rdf-lowerer` block to obtain back the `GTFS Stop` file.
 - `/load`: allows loading an additional source that can later be used to enrich the KG during the conversion process.
 
-The `/lift` and `/roundtrip/gtfs/` routes accept the following option via HTTP Header
+The `/lift/gtfs` and `/roundtrip/gtfs/` routes accept the following option via HTTP Header
 
 - `additional_source:<filename>`: enrich the KG before lowering with additional triples in the provided source 
-- `inference:true`: apply inference using the provided [ontology](src/main/resources/ontology.owl)
-- `construct:true`: apply the provided [SPARQL Construct query](src/main/resources/construct.ttl) to enrich the KG with additional triples
+- `inference:true`: apply inference using the provided [ontology](src/main/resources/ontology.owl) through the `chimera-graph-inference` block
+- `construct:true`: apply the provided [SPARQL Construct query](src/main/resources/construct.ttl) to enrich the KG with additional triples through the `chimera-graph-construct` block
+
+<p align="left"><img src="img/chimera-tutorial.png" alt="Chimera tutorial pipeline" width="800"></p>
 
 ## Repository structure
 
@@ -50,7 +72,7 @@ The `run.sh` bash script specifies how to run the converter using directly the J
 
 To run the `chimera-tutorial`, if you have Docker installed, you can simply run the image from [DockerHub](https://hub.docker.com/repository/docker/cefriel/chimera-tutorial):
 ```
-docker run -p 8888:8888 cefriel/chimera-tutorial
+docker run -p 8888:8888 cefriel/chimera:tutorial
 ```
 Otherwise:
 1. clone or download the repository
@@ -90,7 +112,7 @@ Use the _RML lifter_ block to obtain a Linked GTFS representation of the `stops.
 
 ```
 POST http://localhost:8888/chimera-demo/lift/gtfs/ 
-Attach the file chimera-example/inbox/sample-gtfs-feed.zip
+Attach the file inbox/sample-gtfs-feed.zip
 ```
 
 #### Construct (`sh tutorial.sh construct`)
@@ -99,7 +121,7 @@ Use the _RML lifter_ block  to obtain a Linked GTFS representation of the `stops
 
 ```
 POST http://localhost:8888/chimera-demo/roundtrip/gtfs/ 
-Attach the file chimera-example/inbox/sample-gtfs-feed.zip
+Attach the file inbox/sample-gtfs-feed.zip
 Add as header construct:true
 ```
 
@@ -109,7 +131,7 @@ Use the _RML lifter_ block and the _rdf-lowerer_ block to obtain back a GTFS rep
 
 ```
 POST http://localhost:8888/chimera-demo/roundtrip/gtfs/ 
-Attach the file chimera-example/inbox/sample-gtfs-feed.zip
+Attach the file inbox/sample-gtfs-feed.zip
 ```
 
 #### Enrich (`sh tutorial.sh enrich`)
@@ -118,7 +140,7 @@ Use the _RML lifter_ block and the _rdf-lowerer_ block to obtain back an _enrich
 
 ```
 POST http://localhost:8888/chimera-demo/roundtrip/gtfs/ 
-Attach the file chimera-example/inbox/sample-gtfs-feed.zip
+Attach the file inbox/sample-gtfs-feed.zip
 Add as header additional_source:enrich.ttl
 ```
 
@@ -129,14 +151,14 @@ You can also use a different additional source using two steps:
 1. Load an additional source, e.g., [my-source.ttl](inbox/my-source.ttl)
 ```
 POST http://localhost:8888/chimera-demo/load/ 
-For example, attach the file chimera-example/inbox/my-source.ttl
+For example, attach the file inbox/my-source.ttl
 Add as header filename:my-source.ttl
 ```
 
 2. Perform the enriched conversion
 ```
 POST http://localhost:8888/chimera-demo/roundtrip/gtfs/ 
-Attach the file chimera-example/inbox/sample-gtfs-feed.zip
+Attach the file inbox/sample-gtfs-feed.zip
 Add as header additional_source:my-source.ttl
 ```
 
@@ -146,7 +168,7 @@ Use the _RML lifter_ block and the _rdf-lowerer_ block to obtain back an _enrich
 
 ```
 POST http://localhost:8888/chimera-demo/roundtrip/gtfs/ 
-Attach the file chimera-example/inbox/sample-gtfs-feed.zip
+Attach the file inbox/sample-gtfs-feed.zip
 Add as header 
     additional_source:enrich.ttl
     inference:true
