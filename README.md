@@ -4,11 +4,14 @@ The `chimera-tutorial` project offers a complete example to easily understand ho
 
 ## TL;DR
 
-Launch the `chimera-tutorial` pipelines with Docker
+1. Launch the `chimera-tutorial` pipelines with Docker
 ```
 docker run -p 8888:8888 cefriel/chimera:tutorial
 ```
-Follow the instructions in the ["Try it" section](#Try it) or simply run the `tutorial.sh` script with one of the following arguments: `lift`, `construct`, `conversion`, `enrich`, `load-enrich`, `inference`. 
+2. Follow the instructions in the [_Try it_ section](#try-it) to invoke the endpoints: (i) import the Postman collection, or (ii) run the `tutorial.sh` script with one of the following arguments: `lift`, `construct`, `conversion`, `enrich`, `load-enrich`, `inference`. 
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d4136255a10b71a4fd2d)
+
 The result of each operation is saved in the `outbox` folder.
 
 ## Chimera pipeline configuration
@@ -100,9 +103,7 @@ To build only the `chimera-tutorial` project you can run `sh run.sh --build`.
 
 ## Try it
 
-You can execute the tutorial following these instructions. Corresponding cURL command are available in the file `tutorial.sh`.
-
-A Postman collection is made available (once imported configure files from `inbox` folder in the request Body):
+You can execute the tutorial following these instructions. Corresponding cURL command are available in the file `tutorial.sh`. A Postman collection is made available (once imported configure files from `inbox` folder in the request Body).
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d4136255a10b71a4fd2d)
 
