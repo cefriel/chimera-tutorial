@@ -49,7 +49,7 @@ Configuration
 - `inbox` folder: contains the input files provided to test and validate the converter.
 - `lifting` folder: contains the lifting mappings in both [YARRRML](https://w3id.org/yarrrml/spec/) and [RML](https://rml.io/specs/rml) syntax.
 - `lowering` folder: contains the lowering template (`.vm`) using [VTL](https://velocity.apache.org/engine/1.7/vtl-reference.html).
-- `output` folder: contains the expected results for the tutorial execution.
+- `outbox` folder: contains the expected results for the tutorial execution.
 
 Source code
 
