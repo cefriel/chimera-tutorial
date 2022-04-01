@@ -6,10 +6,10 @@ RUN cd chimera && mvn install -DskipTests
 RUN mvn clean install
 
 FROM openjdk:11-jdk
-COPY --from=builder /usr/src/converter/target/chimera-tutorial-1.0.0.jar /home/chimera-tutorial-1.0.0.jar
+COPY --from=builder /usr/src/converter/target/chimera-tutorial.jar /home/chimera-tutorial.jar
 WORKDIR /home/
 COPY src/main/resources /home/
 COPY lifting /home/
 COPY lowering /home/
 
-ENTRYPOINT ["java","-Xmx4g","-jar","/home/chimera-tutorial-1.0.0.jar"]
+ENTRYPOINT ["java","-Xmx4g","-jar","/home/chimera-tutorial.jar"]

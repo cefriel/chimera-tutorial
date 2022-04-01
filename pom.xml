@@ -5,7 +5,7 @@
 
   <groupId>com.cefriel</groupId>
   <artifactId>chimera-tutorial</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <packaging>jar</packaging>
 
   <name>chimera-tutorial</name>
@@ -50,6 +50,16 @@
       <version>${camel.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-micrometer</artifactId>
+      <version>${camel.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+      <version>1.5.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
       <version>${slf4j.version}</version>
@@ -87,6 +97,7 @@
               <goal>repackage</goal>
             </goals>
             <configuration>
+              <finalName>chimera-tutorial</finalName>
               <mainClass>com.cefriel.chimera.tutorial.ConverterApplication</mainClass>
             </configuration>
           </execution>
