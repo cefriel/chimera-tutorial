@@ -12,7 +12,7 @@ docker run -p 8888:8888 cefriel/chimera:tutorial
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d4136255a10b71a4fd2d)
 
-The result of each operation is saved in the `outbox` folder.
+3. An advanced tutorial for monitoring and scalability is available in [tutorial-advanced](tutorial-advanced).
 
 ## Chimera pipeline configuration
 
@@ -106,6 +106,8 @@ To build only the `chimera-tutorial` project you can run `sh run.sh --build`.
 You can execute the tutorial following these instructions. Corresponding cURL command are available in the file `tutorial.sh`. A Postman collection is made available (once imported configure files from `inbox` folder in the request Body).
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d4136255a10b71a4fd2d)
+
+An advanced tutorial for monitoring and scalability is available in [tutorial-advanced](tutorial-advanced).
 
 #### Lifting (`sh tutorial.sh lifting`)
 
