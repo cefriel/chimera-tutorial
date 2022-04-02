@@ -44,15 +44,15 @@ $ kubectl get pods
 NAME                             READY   STATUS    RESTARTS   AGE
 chimera-example-c6b446c8-7mbg6   1/1     Running   0          33m
 ```
-You can try the converter locally using the node port 30042, for example:
+You can try the converter locally using the node port 30042 and the file `tutorial.sh`. For example:
 ```
-POST http://localhost:30042/chimera-demo/lift/gtfs/ 
-Attach the file inbox/sample-gtfs-feed.zip
+export PORT=30042
+sh tutorial.sh lifting
 ```
 To manually scale the Service you can run
 ```
 $ kubectl scale --replicas=3 deployments/chimera-example
-deployment.extensions/chimera-example scaled
+deployment.apps/chimera-example scaled
 $ kubectl get pods
 NAME                             READY   STATUS              RESTARTS   AGE
 chimera-example-c6b446c8-gb9rs   0/1     ContainerCreating   0          2s

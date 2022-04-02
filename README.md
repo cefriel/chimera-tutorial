@@ -12,8 +12,6 @@ docker run -p 8888:8888 cefriel/chimera:tutorial
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d4136255a10b71a4fd2d)
 
-The result of each operation is saved in the `outbox` folder.
-
 ## Chimera pipeline configuration
 
 A standard Chimera pipeline can be composed of four blocks:
@@ -82,7 +80,7 @@ Otherwise:
 2. download the Jar from the latest [release](https://github.com/cefriel/chimera-tutorial/releases) of the `chimera-tutorial`
 3. add the Jar to a `target` folder.
 
-You can run the Jar using `sh run.sh`or run your own Docker image using `docker-compose up`.
+You can run the Jar using `sh run.sh` or run your own Docker image using `docker-compose up`.
 
 ### How to configure
 
@@ -107,12 +105,14 @@ You can execute the tutorial following these instructions. Corresponding cURL co
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d4136255a10b71a4fd2d)
 
+To run `tutorial.sh` using a different port for the converter, set the `PORT` environment variable (default value is 8888). 
+
 #### Lifting (`sh tutorial.sh lifting`)
 
 Use the _RML lifter_ block to obtain a Linked GTFS representation of the `stops.txt` file in the sample GTFS feed.
 
 ```
-POST http://localhost:8888/chimera-demo/lift/gtfs/ 
+POST http://localhost:$PORT/chimera-demo/lift/gtfs/ 
 Attach the file inbox/sample-gtfs-feed.zip
 ```
 
@@ -121,7 +121,7 @@ Attach the file inbox/sample-gtfs-feed.zip
 Use the _RML lifter_ block  to obtain a Linked GTFS representation of the `stops.txt` file in the sample GTFS feed and enrich it with triples generated from a an example [SPARQL Construct query](src/main/resources/construct.ttl).
 
 ```
-POST http://localhost:8888/chimera-demo/roundtrip/gtfs/ 
+POST http://localhost:$PORT/chimera-demo/roundtrip/gtfs/ 
 Attach the file inbox/sample-gtfs-feed.zip
 Add as header construct:true
 ```
@@ -131,7 +131,7 @@ Add as header construct:true
 Use the _RML lifter_ block and the _rdf-lowerer_ block to obtain back a GTFS representation of the `stops.txt` file in the sample GTFS feed after a roundtrip through a Linked GTFS representation.
 
 ```
-POST http://localhost:8888/chimera-demo/roundtrip/gtfs/ 
+POST http://localhost:$PORT/chimera-demo/roundtrip/gtfs/ 
 Attach the file inbox/sample-gtfs-feed.zip
 ```
 
@@ -140,7 +140,7 @@ Attach the file inbox/sample-gtfs-feed.zip
 Use the _RML lifter_ block and the _rdf-lowerer_ block to obtain back an _enriched_ GTFS representation of a sample GTFS feed after a roundtrip through a Linked GTFS representation. In this example, we use the example data in [enrich.ttl](src/main/resources/enrich.ttl).
 
 ```
-POST http://localhost:8888/chimera-demo/roundtrip/gtfs/ 
+POST http://localhost:$PORT/chimera-demo/roundtrip/gtfs/ 
 Attach the file inbox/sample-gtfs-feed.zip
 Add as header additional_source:enrich.ttl
 ```
@@ -151,14 +151,14 @@ You can also use a different additional source using two steps:
 
 1. Load an additional source, e.g., [my-source.ttl](inbox/my-source.ttl)
 ```
-POST http://localhost:8888/chimera-demo/load/ 
+POST http://localhost:$PORT/chimera-demo/load/ 
 For example, attach the file inbox/my-source.ttl
 Add as header filename:my-source.ttl
 ```
 
 2. Perform the enriched conversion
 ```
-POST http://localhost:8888/chimera-demo/roundtrip/gtfs/ 
+POST http://localhost:$PORT/chimera-demo/roundtrip/gtfs/ 
 Attach the file inbox/sample-gtfs-feed.zip
 Add as header additional_source:my-source.ttl
 ```
@@ -168,7 +168,7 @@ Add as header additional_source:my-source.ttl
 Use the _RML lifter_ block and the _rdf-lowerer_ block to obtain back an _enriched_ GTFS representation of a sample GTFS feed after a roundtrip through a Linked GTFS representation and enabling RDFS inference. In this example, we use an example [ontology](src/main/resources/ontology.owl) defining an axiom for the definition of a `range` on the `gtfs:parentStation` property. Using the enricher block with data in the additional source, and enabling inference with that ontology, we can retrieve an additional `gtfs:Stop` in the lowering of the `stops.txt` file.
 
 ```
-POST http://localhost:8888/chimera-demo/roundtrip/gtfs/ 
+POST http://localhost:$PORT/chimera-demo/roundtrip/gtfs/ 
 Attach the file inbox/sample-gtfs-feed.zip
 Add as header 
     additional_source:enrich.ttl
@@ -177,5 +177,5 @@ Add as header
 
 ### Notes
 
-- The `InferenceEnricher` block enabled in this pipeline performs a one-time inference evaluation against the schema adding the resulting triples to the graph. To improve performances and guarantee inference throughout the entire pipeline, it is recommended to configure the `AttachGraph` block.
-- Enrichment and Inference can also be applied using the same headers to the lifting route (http://localhost:8888/chimera-demo/lift/gtfs/)
+- The `InferenceEnricher` processor enabled in this pipeline performs a one-time inference evaluation against the schema adding the resulting triples to the graph. To improve performances and guarantee inference throughout the entire pipeline, it is recommended to configure the `AttachGraph` processor.
+- Enrichment and Inference can also be applied using the same headers to the lifting route (http://localhost:$PORT/chimera-demo/lift/gtfs/)
