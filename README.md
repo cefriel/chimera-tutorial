@@ -12,6 +12,8 @@ docker run -p 8888:8888 cefriel/chimera:tutorial
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d4136255a10b71a4fd2d)
 
+3. An advanced tutorial for monitoring and scalability is available in [tutorial-advanced](tutorial-advanced).
+
 ## Chimera pipeline configuration
 
 A standard Chimera pipeline can be composed of four blocks:
@@ -106,6 +108,8 @@ You can execute the tutorial following these instructions. Corresponding cURL co
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d4136255a10b71a4fd2d)
 
 To run `tutorial.sh` using a different port for the converter, set the `PORT` environment variable (default value is 8888). 
+
+An advanced tutorial for monitoring and scalability is available in [tutorial-advanced](tutorial-advanced).
 
 #### Lifting (`sh tutorial.sh lifting`)
 
