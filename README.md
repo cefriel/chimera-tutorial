@@ -26,7 +26,7 @@ The Chimera project specifies three different components.
 
    Allows conversions from an input representation to an output representation through [Apache Velocity Templates (VTL)](https://velocity.apache.org/).
 
-These components and related operations are are explained in in section [Chimera components and configuration](# Chimera components and configuration).
+These components and related operations are are explained in in section [Chimera components and configuration](#Chimera components and configuration).
 
 ## Example routes
 every route lift and lower
