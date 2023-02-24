@@ -8,11 +8,12 @@ The `chimera-tutorial` project offers a complete example to easily understand ho
 ```
 docker run -p 8888:8888 cefriel/chimera:tutorial
 ```
-2. Follow the instructions in the [_Try it_ section](#try-it) to invoke the endpoints: (i) import the Postman collection, or (ii) run the `tutorial.sh` script with one of the following arguments: `lift`, `liftConstruct`, `roundtrip`, `roundtripAdd`, `roundtripInference`, `roundtripTemplate`. Each argument refers to one of the routes presented in section [Example routes](#Example-routes).
+2. Follow the instructions in the [_Try it_ section](#try-it) to invoke the endpoints: (i) import the Postman collection, or (ii) run the `tutorial.sh` script with one of the following arguments: `lift`, `liftConstruct`, `roundtrip`, `roundtripAdd`, `roundtripInference`, `roundtripTemplate`. Each argument refers to one of the routes presented in section [Tutorial Routes](#Tutorial-Routes).
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d4136255a10b71a4fd2d)
 
-## Chimera Components
+## Structure of a Chimera Pipeline
+
+## Chimera Route Components
 
 The Chimera project specifies three different components.
 
@@ -26,15 +27,11 @@ The Chimera project specifies three different components.
 
    Allows conversions from an input representation to an output representation through [Apache Velocity Templates (VTL)](https://velocity.apache.org/).
 
-These components and related operations are are explained in in section [Chimera components and configuration](#Chimera-components-and-configuration).
+These components and related operations are explained in section [Chimera components and configuration](#Chimera-components-and-configuration).
 
-## Example routes
-every route lift and lower
+## Tutorial Routes
 
-A route starts from a source, which may be any of the apache camel
-components. 
-
-This tutorial presents several routes, each one making use of the various Chimera Apache Camel components defined by the Chimera project. 
+This tutorial presents several Chimera routes, each one making use of the various Chimera Apache Camel components defined by the Chimera Framework. 
 Routes are defined in file [chimera-routes.xml](./src/main/resources/routes/chimera-route.xml).
 
 <p align="left"><img src="img/chimera-tutorial-routes.png" alt="Chimera tutorial routes" width="1000"></p>
@@ -51,12 +48,12 @@ Each route uses a sample [GTFS](https://developers.google.com/transit/gtfs) feed
 
 	The route passes through the same steps as the /lift route with the addition of the Chimera Graph Construct step. 
 	This component allows for the enrichment of the RDF graph with the triples generate through the SPARQL construct query defined in file [construct.txt](./queries/construct.txt). 
-	The ouput of this route is shown in file [liftConstruct.ttl](./outbox/liftConstruct.ttl).
+	The output of this route is shown in file [liftConstruct.ttl](./outbox/liftConstruct.ttl).
 	
 - `roundtrip route (/roundtrip)`
 
 	As described in the previous routes, the stops.txt file is lifted tothe linked gtfs ontology. 
-	This information is then lowered to a csv file representation through the Chimera Mapping Template component using the [loweringTemplate](./mappings/vtl/loweringTemplate.vm) mapping. 
+	This information is then lowered to a csv file representation through the Chimera Mapping Template component using the [loweringTemplate.vm](./mappings/vtl/loweringTemplate.vm) mapping. 
 	The result of this operation is presented in file [roundtrip.csv](./outbox/roundtrip.csv).
 
 - `roundtripAdd route (/roundtripAdd)`
@@ -74,7 +71,7 @@ Each route uses a sample [GTFS](https://developers.google.com/transit/gtfs) feed
 	This route shows that the Chimera Mapping template can be used for both lifting and lowering steps of a data harmonization pipeline. 
 	The stops.txt file is lifted throught the mappings defined in file [liftingTemplate.vm](./mappings/vtl/liftingTemplate.vm). 
 	The obtained RDF triples are then loaded in a RDF graph by using the Chimera Graph Get component. 
-	Furthermore a validation of the RDF triples is conducted using the SHACL shape defined in file [gtfsStopShacl.ttl](./shacl-shapes/gtfsStopShacl.ttl) through the Chimera Shacl Component.
+	Furthermore, a validation of the RDF triples is conducted using the SHACL shape defined in file [gtfsStopShacl.ttl](./shacl-shapes/gtfsStopShacl.ttl) through the Chimera Shacl Component.
 	The validated result is then lowered to a csv file by using the mapping defined in file [loweringTemplate.vm](./mappings/vtl/loweringTemplate.vm) by the Chimera Mapping component.
 
 ### Chimera components and configuration
@@ -190,7 +187,7 @@ For example:
 	<camel:to uri="graph://shacl?chimeraResources=#bean:shaclShapes"/>
 	```
 
-- `Mappping Template component` 
+- `Mapping Template component` 
 
    The Mapping Template component is used to apply Apache VTL templates to the received input to obtained a desired output representation.
    It can be used both for lifting and lowering operations.
@@ -210,4 +207,23 @@ For example:
 	The *rdf* parameter specifies that the source format is rdf. 
 	This is always the case for lowering operations.
 	The used template is specified by the *template* parameter while the directory and filename where the result of the lowering operation will be saved are specified with respectively with the *basePath* and *fileName* parameters.
-	
+
+## How to build and run
+
+### Using Docker
+
+To run the `chimera-tutorial`, if you have Docker installed, you can simply run the image from [DockerHub](https://hub.docker.com/repository/docker/cefriel/chimera-tutorial):
+```
+docker run -p 8888:8888 cefriel/chimera:tutorial
+```
+
+Run the desired route by using the [tutorial.sh](./tutorial.sh) file which takes the name of the route as a paremeter (`lift`, `liftConstruct`, `roundtrip`, `roundtripAdd`, `roundtripInference`, `roundtripTemplate`).
+
+### Using the pre-built Jar
+
+1. clone or download the repository
+2. download the Jar from the latest [release](https://github.com/cefriel/chimera-tutorial/releases) of the `chimera-tutorial`
+3. add the Jar to a `target` folder.
+
+You can run the Jar using `sh run.sh`
+
