@@ -6,28 +6,35 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <https://www.cefriel.com/data/AMV> a gtfs:Stop;
-  foaf:page "http://my-source.com/stops/AMV".
+  foaf:page "http://samplefeed.com/stops/AMV";
+  gtfs:parentStation <https://www.cefriel.com/data/AMV_STATION_INFERENCE_DEMO> .
 
 <https://www.cefriel.com/data/BEATTY_AIRPORT> a gtfs:Stop;
-  foaf:page "http://my-source.com/stops/BEATTY_AIRPORT".
+  foaf:page "http://samplefeed.com/stops/BEATTY_AIRPORT".
+
+<https://www.cefriel.com/data/AMV_STATION_INFERENCE_DEMO> dct:identifier "AMV_STATION_INFERENCE_DEMO";
+  geo:lat 3.6641496E1;
+  geo:long -1.1640094E2;
+  gtfs:locationType <http://transport.linkeddata.es/resource/LocationType/1> ;
+  foaf:name "AMV Station (Inference Demo)" .
 
 <https://www.cefriel.com/data/BULLFROG> a gtfs:Stop;
-  foaf:page "http://my-source.com/stops/BULLFROG".
+  foaf:page "http://samplefeed.com/stops/BULLFROG".
 
 <https://www.cefriel.com/data/DADAN> a gtfs:Stop;
-  foaf:page "http://my-source.com/stops/DADAN".
+  foaf:page "http://samplefeed.com/stops/DADAN".
 
 <https://www.cefriel.com/data/EMSI> a gtfs:Stop;
-  foaf:page "http://my-source.com/stops/EMSI".
+  foaf:page "http://samplefeed.com/stops/EMSI".
 
 <https://www.cefriel.com/data/FUR_CREEK_RES> a gtfs:Stop;
-  foaf:page "http://my-source.com/stops/FUR_CREEK_RES".
+  foaf:page "http://samplefeed.com/stops/FUR_CREEK_RES".
 
 <https://www.cefriel.com/data/NADAV> a gtfs:Stop;
-  foaf:page "http://my-source.com/stops/NADAV".
+  foaf:page "http://samplefeed.com/stops/NADAV".
 
 <https://www.cefriel.com/data/NANAA> a gtfs:Stop;
-  foaf:page "http://my-source.com/stops/NANAA".
+  foaf:page "http://samplefeed.com/stops/NANAA".
 
 <https://www.cefriel.com/data/STAGECOACH> a gtfs:Stop;
-  foaf:page "http://my-source.com/stops/STAGECOACH".
+  foaf:page "http://samplefeed.com/stops/STAGECOACH".

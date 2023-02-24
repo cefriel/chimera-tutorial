@@ -1,39 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!--
+
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.cefriel</groupId>
-  <artifactId>chimera-tutorial</artifactId>
-  <version>1.1.0</version>
-  <packaging>jar</packaging>
 
-  <name>chimera-tutorial</name>
-  <description>Chimera Tutorial Converter</description>
+  <groupId>org.apache.camel.example</groupId>
+  <version>4.0.0-SNAPSHOT</version>
+
+  <artifactId>camel-example-main-yaml</artifactId>
+  <packaging>jar</packaging>
+  <name>Camel :: Example :: Main :: YAML</name>
+  <description>An example for showing standalone Camel using YAML</description>
 
   <properties>
-    <camel.version>3.3.0</camel.version>
+    <category>Beginner</category>
+    <camel.version>3.16.0</camel.version>
     <slf4j.version>1.7.25</slf4j.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <!-- Add Camel BOM -->
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-bom</artifactId>
+        <version>${camel.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
+
+    <!-- use camel-main to bootstrap camel -->
+
+    <!-- yaml route dependency -->
+    <!-- <dependency> -->
+    <!--     <groupId>org.apache.camel</groupId> -->
+    <!--     <artifactId>camel-yaml-dsl</artifactId> -->
+    <!-- </dependency> -->
+    <!-- <!-\- xml route dependency -\-> -->
+    <!-- <dependency> -->
+    <!--     <groupId>org.apache.camel</groupId> -->
+    <!--     <artifactId>camel-xml-io-dsl</artifactId> -->
+    <!-- </dependency> -->
+    <!-- spring xml dependency -->
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-spring-main</artifactId>
-      <version>${camel.version}</version>
-    </dependency>   
+      <artifactId>camel-spring-xml</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-impl</artifactId>
+      <version>2.3.1</version>
+    </dependency>
+
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-undertow</artifactId>
       <version>${camel.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-http</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
+
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-zip-deflater</artifactId>
@@ -44,35 +93,71 @@
       <artifactId>camel-zipfile</artifactId>
       <version>${camel.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-jackson</artifactId>
+      <artifactId>camel-direct</artifactId>
       <version>${camel.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-micrometer</artifactId>
+      <artifactId>camel-seda</artifactId>
       <version>${camel.version}</version>
     </dependency>
+
     <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-registry-prometheus</artifactId>
-      <version>1.5.0</version>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-rest</artifactId>
+      <version>${camel.version}</version>
     </dependency>
+
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j.version}</version>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-spring-main</artifactId>
+      <version>${camel.version}</version>
     </dependency>
     <dependency>
       <groupId>com.cefriel</groupId>
-      <artifactId>chimera-rml</artifactId>
+      <artifactId>graph-component</artifactId>
       <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.cefriel</groupId>
-      <artifactId>chimera-rdf-lowerer</artifactId>
+      <artifactId>rdft-component</artifactId>
       <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.cefriel</groupId>
+      <artifactId>rml-component</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
+    <!-- and we use these components -->
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-bean</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-log</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-quartz</artifactId>
+    </dependency>
+
+    <!-- logging -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>2.17.2</version>
+    </dependency>
+    <!-- for testing -->
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-test-main-junit5</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -80,29 +165,59 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
-        <configuration>
-          <source>11</source>
-          <target>11</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
         <executions>
           <execution>
-            <id>repackage</id>
+            <phase>package</phase>
             <goals>
-              <goal>repackage</goal>
+              <goal>shade</goal>
             </goals>
             <configuration>
-              <finalName>chimera-tutorial</finalName>
-              <mainClass>com.cefriel.chimera.tutorial.ConverterApplication</mainClass>
+              <finalName>camel-yaml</finalName>
+              <shadedArtifactAttached>false</shadedArtifactAttached>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>org.apache.camel.example.MyApplication</mainClass>
+                </transformer>
+              </transformers>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
             </configuration>
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-maven-plugin</artifactId>
+        <version>${camel.version}</version>
+        <configuration>
+          <!-- use built-in logging, instead of logback -->
+          <logLevel>INFO</logLevel>
+          <mainClass>org.apache.camel.example.MyApplication</mainClass>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+  
+  <profiles>
+    <profile>
+      <id>camel.debug</id>
+      <activation>
+        <property>
+          <name>camel.debug</name>
+          <value>true</value>
+        </property>
+      </activation>
+    </profile>
+  </profiles>
 </project>

@@ -1,9 +1,30 @@
-FROM openjdk:11-jdk
+FROM maven:3.8.3-openjdk-17 as builder
 
-WORKDIR /home/
-COPY ./target/chimera-tutorial.jar /home/chimera-tutorial.jar
-COPY src/main/resources /home/
-COPY lifting /home/
-COPY lowering /home/
+WORKDIR /usr/src/deps
+# Install dependencies
+RUN git clone https://github.com/cefriel/chimera.git -b chimera-v3-rdft-component-refactor
 
-ENTRYPOINT ["java","-Xmx4g","-jar","/home/chimera-tutorial.jar"]
+WORKDIR /usr/src/deps/chimera
+RUN git submodule init
+RUN git submodule update --remote --merge
+RUN mvn clean install -DskipTests
+# RUN sleep 10000000000
+
+WORKDIR /
+COPY . /usr/src/camel-yaml
+
+# Install example
+WORKDIR /usr/src/camel-yaml
+RUN mvn clean install
+
+FROM openjdk:17-jdk
+COPY --from=builder /usr/src/camel-yaml/target/camel-yaml.jar /home/camel-yaml.jar
+COPY ./inbox/ /home/inbox/
+COPY ./mappings/ /home/mappings/
+COPY ./queries/ /home/queries/
+COPY ./ontologies/ /home/ontologies/
+COPY ./shacl-shapes/ /home/shacl-shapes/
+
+ENTRYPOINT ["java","-Xmx4g","-jar","/home/camel-yaml.jar"]
+
+# RUN sleep 10000000000
