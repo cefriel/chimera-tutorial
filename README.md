@@ -62,11 +62,11 @@ Each route uses a sample [GTFS](https://developers.google.com/transit/gtfs) feed
 - `roundtripAdd route (/roundtripAdd)`
   
   The same steps as the previous route are performed. 
-  In addition, through the Chimera Graph Add component, the rdf triples specified in the [my-source.ttl](./inbox/my-source.ttl) file are used to enrich the RDF graph.
+  In addition, through the Chimera Graph component Add operation, the rdf triples specified in the [my-source.ttl](./inbox/my-source.ttl) file are used to enrich the RDF graph.
  
 - `roundtripInference route (/roundtripInference)`
    
-   The RDF graph that is produced by applying the RML mappings is enriched through the triples obtained by the inference rules stated in the [ontology.owl](./ontologies/ontology.owl) file which are applied by the Chimera Graph Inference component.
+   The RDF graph that is produced by applying the RML mappings is enriched through the triples obtained by the inference rules stated in the [ontology.owl](./ontologies/ontology.owl) file which are applied by the Chimera Graph component Inference operation.
    The obtained result is available in file [roundtripInference.csv](./outbox/roundtripInference.csv).
   
 - `roundtripTemplate route (/roundtripTemplate)`
@@ -153,39 +153,39 @@ For example:
 	Through the *mappings* parameter the RML mappings that are used in the mapping operation are specified, expressed as ChimeraResources.
 	Finally, *baseIri* and *baseIriPrefix* are additional parameters that are set.
 
-- `Chimera Graph Dump component` 
+- `Chimera Graph component Dump operation` 
 
-   The Chimera Graph Dump component takes a RDF graph as input and saves it to a user-specified file.
+   The Chimera Graph component Dump operation takes a RDF graph as input and saves it to a user-specified file.
    It is configured as follows:
 	```xml
 	<camel:to uri="graph://dump?filename=dump.ttl&amp;basePath=./home/outbox&amp;dumpFormat=turtle"/>
 	```
 
-- `Chimera Graph Inference component` 
+- `Chimera Graph component Inference operation` 
 
-   The Chimera Graph Inference component applies the inference rules specified in one or more ontology files to the RDF graph received as input.
+   The Chimera Graph component Inference operation applies the inference rules specified in one or more ontology files to the RDF graph received as input.
    The ontologies are passed to the component via the chimeraResources parameter.
     ```xml
 	<camel:to uri="graph://inference?chimeraResources=#bean:ontologies"/>
 	```
 
-- `Chimera Graph Add component` 
+- `Chimera Graph component Add operation` 
 
-   The Chimera Graph Add component adds the triples from the files specified in the chimeraResources bean to the received RDF graph.
+   The Chimera Graph component Add operation adds the triples from the files specified in the chimeraResources bean to the received RDF graph.
     ```xml
 	<camel:to uri="graph://add?chimeraResources=#bean:triples"/>
 	```
 
-- `Chimera Graph Construct component` 
+- `Chimera Graph component Construct operation` 
 
-   The Chimera Graph Construct component adds the triples obtained from the SPARQL construct queries specified in the chimeraResources bean to the received RDF graph.
+   The Chimera Graph component Construct operation adds the triples obtained from the SPARQL construct queries specified in the chimeraResources bean to the received RDF graph.
     ```xml
 	<camel:to uri="graph://construct?chimeraResources=#bean:queries"/>
 	```
 
-- `Chimera Graph Shacl component` 
+- `Chimera Graph component Shacl operation` 
 
-   The Chimera Graph Shacl component validates the received RDF graph using the SHACL shapes specified in the chimeraResources bean parameter.
+   The Chimera Graph component Shacl operation validates the received RDF graph using the SHACL shapes specified in the chimeraResources bean parameter.
     ```xml
 	<camel:to uri="graph://shacl?chimeraResources=#bean:shaclShapes"/>
 	```
