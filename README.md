@@ -37,7 +37,7 @@ components.
 This tutorial presents several routes, each one making use of the various Chimera Apache Camel components defined by the Chimera project. 
 Routes are defined in file [chimera-routes.xml](./src/main/resources/routes/chimera-route.xml).
 
-<p align="left"><img src="img/chimera-tutorial-routes.png" alt="Chimera tutorial routes" width="800"></p>
+<p align="left"><img src="img/chimera-tutorial-routes.png" alt="Chimera tutorial routes" width="1000"></p>
 
 Each route uses a sample [GTFS](https://developers.google.com/transit/gtfs) feed as input and the [Linked GTFS](https://github.com/OpenTransport/linked-gtfs) vocabulary as the reference ontology.
 
