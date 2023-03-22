@@ -18,13 +18,13 @@ WORKDIR /usr/src/camel-yaml
 RUN mvn clean install
 
 FROM openjdk:17-jdk
-COPY --from=builder /usr/src/camel-yaml/target/camel-yaml.jar /home/camel-yaml.jar
+COPY --from=builder /usr/src/camel-yaml/target/chimera-tutorial.jar /home/chimera-tutorial.jar
 COPY ./inbox/ /home/inbox/
 COPY ./mappings/ /home/mappings/
 COPY ./queries/ /home/queries/
 COPY ./ontologies/ /home/ontologies/
 COPY ./shacl-shapes/ /home/shacl-shapes/
 
-ENTRYPOINT ["java","-Xmx4g","-jar","/home/camel-yaml.jar"]
+ENTRYPOINT ["java","-Xmx4g","-jar","/home/chimera-tutorial.jar"]
 
 # RUN sleep 10000000000
