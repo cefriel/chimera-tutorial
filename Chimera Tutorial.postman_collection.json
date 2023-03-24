@@ -1,0 +1,166 @@
+{
+	"info": {
+		"_postman_id": "e21612a4-9feb-4e7a-a668-51b31727cf1a",
+		"name": "Chimera tutorial",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25915328"
+	},
+	"item": [
+		{
+			"name": "Lift",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/chimera-demo/lift",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"chimera-demo",
+						"lift"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lift Construct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/chimera-demo/liftConstruct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"chimera-demo",
+						"liftConstruct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Roundtrip",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/chimera-demo/roundtrip",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"chimera-demo",
+						"roundtrip"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Roundtrip Add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/chimera-demo/roundtripAdd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"chimera-demo",
+						"roundtripAdd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Roundtrip Inference",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/chimera-demo/roundtripInference",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"chimera-demo",
+						"roundtripInference"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Roundtrip Template",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8888/chimera-demo/roundtripTemplate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"chimera-demo",
+						"roundtripTemplate"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
