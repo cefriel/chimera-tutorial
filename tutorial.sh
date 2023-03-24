@@ -3,8 +3,6 @@
 : ${PORT:=8888}
 : ${ADDRESS:='http://localhost:'}
 
-ADDRESS="http://172.17.0.02:"
-
 case "$1" in
     "lift")
 	curl --location --request POST "${ADDRESS}${PORT}/chimera-demo/lift" --header 'Content-Type: application/zip' \
