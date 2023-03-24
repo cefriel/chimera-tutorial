@@ -2,7 +2,7 @@ FROM maven:3.8.3-openjdk-17 as builder
 
 WORKDIR /usr/src/deps
 # Install dependencies
-RUN git clone https://github.com/cefriel/chimera.git -b chimera-v3-rdft-component-refactor
+RUN git clone https://github.com/cefriel/chimera.git 
 
 WORKDIR /usr/src/deps/chimera
 RUN git submodule init
