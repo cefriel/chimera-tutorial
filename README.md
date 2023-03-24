@@ -8,7 +8,7 @@ The `chimera-tutorial` project offers a complete example to easily understand ho
 ```
 docker run -p 8888:8888 cefriel/chimera:tutorial
 ```
-2. Follow the instructions in the [_Try it_ section](#try-it) to invoke the endpoints: (i) import the Postman collection, or (ii) run the `tutorial.sh` script with one of the following arguments: `lift`, `liftConstruct`, `roundtrip`, `roundtripAdd`, `roundtripInference`, `roundtripTemplate`. Each argument refers to one of the routes presented in section [Tutorial Routes](#Tutorial-Routes).
+2. Run the routes described in the [Tutorial Routes](#Tutorial-Routes) to invoke the endpoints: (i) import the Postman collection, or (ii) run the `tutorial.sh` script with one of the following arguments: `lift`, `liftConstruct`, `roundtrip`, `roundtripAdd`, `roundtripInference`, `roundtripTemplate`. Each argument refers to one of the routes presented in section [Tutorial Routes](#Tutorial-Routes).
 When using the included Postman collection remember to set the Body for each request to the file [sample-gtfs-feed.zip](./inbox/sample-gtfs-feed.zip)
 
 ## Chimera Route Components
