@@ -216,12 +216,3 @@ docker run -p 8888:8888 cefriel/chimera:tutorial
 ```
 
 Run the desired route by using the [tutorial.sh](./tutorial.sh) file which takes the name of the route as a paremeter (`lift`, `liftConstruct`, `roundtrip`, `roundtripAdd`, `roundtripInference`, `roundtripTemplate`).
-
-### Using the pre-built Jar
-
-1. clone or download the repository
-2. download the Jar from the latest [release](https://github.com/cefriel/chimera-tutorial/releases) of the `chimera-tutorial`
-3. add the Jar to a `target` folder.
-
-You can run the Jar using `sh run.sh`
-
