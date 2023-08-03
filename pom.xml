@@ -31,7 +31,7 @@ limitations under the License.
   <properties>
     <category>Beginner</category>
     <camel.version>3.16.0</camel.version>
-    <chimera.version>3.1.0</chimera.version>
+    <chimera.version>3.1.1</chimera.version>
     <slf4j.version>1.7.25</slf4j.version>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>

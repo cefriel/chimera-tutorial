@@ -16,5 +16,3 @@ COPY ./ontologies/ /home/ontologies/
 COPY ./shacl-shapes/ /home/shacl-shapes/
 
 ENTRYPOINT ["java","-Xmx4g","-jar","/home/chimera-tutorial.jar"]
-
-# RUN sleep 10000000000

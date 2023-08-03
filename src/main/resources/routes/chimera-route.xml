@@ -124,11 +124,12 @@
     <camel:route id="dumpGraph">
       <camel:from uri="direct:dump"/>
       <camel:to uri="graph://dump?filename=dump.ttl&amp;basePath=./home/outbox&amp;dumpFormat=turtle"/>
+      <camel:to uri="graph://dump?dumpFormat=turtle"/>
     </camel:route>
 
     <camel:route id="lowerToCsv">
       <camel:from uri="direct:lowerToCsv"/>
-      <camel:to uri= "mapt://rdf?template=#bean:loweringTemplate&amp;basePath=./home/outbox&amp;fileName=gtfs-stops.csv"/>
+      <camel:to uri= "mapt://rdf?template=#bean:loweringTemplate"/>
     </camel:route>
 
     <camel:route id="inferenceRoute">
@@ -138,9 +139,9 @@
 
     <camel:route id="lift">
       <camel:from uri="seda:lift"/>
-      <camel:split streaming="true">
+      <camel:split streaming="true" aggregationStrategy="#class:org.apache.camel.example.CustomAggregationStrategy">
 	<ref>zip_splitter</ref>
-	<convertBodyTo type="java.io.InputStream"/>
+	<!-- <convertBodyTo type="java.io.InputStream"/> -->
 	<camel:filter id="filter_stops1">
 	  <camel:simple>${file:name} == "stops.txt"</camel:simple>
 	  <camel:choice>
@@ -150,7 +151,7 @@
 		<camel:simple>${file:name}</camel:simple>
 	      </camel:setHeader>
 	      <camel:log loggingLevel="INFO" message="Converting ${file:name}"/>
-
+	      <!-- <log message="Exchange Contents before split: ${body}"/> -->
 	      <camel:to uri="rml://?streamName=stops.txt&amp;mappings=#bean:rmlMappings&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
 	      <camel:to uri="direct:dump"/>
 
@@ -159,13 +160,13 @@
 	      <camel:log loggingLevel="INFO" message="$simple{file:name} is empty"/>
 	    </camel:otherwise>
 	  </camel:choice>
-	</camel:filter>
+	</camel:filter>	
       </camel:split>
     </camel:route>
 
     <camel:route id="liftConstruct">
       <camel:from uri="seda:liftConstruct"/>
-      <camel:split streaming="true">
+      <camel:split streaming="true" aggregationStrategy="#class:org.apache.camel.example.CustomAggregationStrategy">
 	<ref>zip_splitter</ref>
 	<convertBodyTo type="java.io.InputStream"/>
 	<camel:filter id="filter_stops2">
@@ -193,7 +194,7 @@
 
     <camel:route id="roundtrip">
       <camel:from uri="seda:roundtrip"/>
-      <camel:split streaming="true">
+      <camel:split streaming="true" aggregationStrategy="#class:org.apache.camel.example.CustomAggregationStrategy">
 	<ref>zip_splitter</ref>
 	<convertBodyTo type="java.io.InputStream"/>
 	<camel:filter id="filter_stops3">
@@ -219,7 +220,7 @@
 
     <camel:route id="roundtripAdd">
       <camel:from uri="seda:roundtripAdd"/>
-      <camel:split streaming="true">
+      <camel:split streaming="true" aggregationStrategy="#class:org.apache.camel.example.CustomAggregationStrategy">
 	<ref>zip_splitter</ref>
 	<convertBodyTo type="java.io.InputStream"/>
 	<camel:filter id="filter_stops4">
@@ -247,7 +248,7 @@
 
     <camel:route id="roundtripInference">
       <camel:from uri="seda:roundtripInference"/>
-      <camel:split streaming="true">
+      <camel:split streaming="true" aggregationStrategy="#class:org.apache.camel.example.CustomAggregationStrategy">
 	<ref>zip_splitter</ref>
 	<convertBodyTo type="java.io.InputStream"/>
 	<camel:filter id="filter_stops5">
@@ -275,7 +276,7 @@
 
     <camel:route id="roundtripTemplate">
       <camel:from uri="seda:roundtripTemplate"/>
-      <camel:split streaming="true">
+      <camel:split streaming="true" aggregationStrategy="#class:org.apache.camel.example.CustomAggregationStrategy">
 	<ref>zip_splitter</ref>
 	<convertBodyTo type="java.io.InputStream"/>
 	<camel:filter id="filter_stops6">
@@ -288,7 +289,7 @@
 	      </camel:setHeader>
 	      <camel:log loggingLevel="INFO" message="Converting ${file:name}"/>
 
-	      <camel:to uri= "mapt://csv?template=#bean:liftingTemplate&amp;format=turtle"/>
+	      <camel:to uri="mapt://csv?template=#bean:liftingTemplate&amp;format=turtle"/>
 	      <camel:to uri="graph://get?rdfFormat=turtle"/>
 	      <camel:to uri="graph://shacl?chimeraResources=#bean:shaclShapes"/>
 	      <camel:to uri="direct:lowerToCsv"/>
