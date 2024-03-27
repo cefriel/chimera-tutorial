@@ -1,0 +1,9 @@
+@prefix ex: <http://example.org/> .
+
+ex:1 ex:hasName "John Doe";
+  ex:hasAge "30"^^<http://www.w3.org/2001/XMLSchema#integer>;
+  ex:hasOccupation "Engineer" .
+
+ex:2 ex:hasName "Jane Smith";
+  ex:hasAge "25"^^<http://www.w3.org/2001/XMLSchema#integer>;
+  ex:hasOccupation "Teacher" .

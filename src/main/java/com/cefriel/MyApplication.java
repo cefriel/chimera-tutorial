@@ -14,11 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.camel.example;
+package com.cefriel;
 
-import org.apache.camel.spring.Main;
-
-import java.io.File;
+import org.apache.camel.main.Main;
 
 /**
  * Main class that boot the Camel application
@@ -26,15 +24,11 @@ import java.io.File;
 public class MyApplication {
 
     public static void main(String[] args) throws Exception {
-	Main main = new Main();
-	String path = "routes/chimera-route.xml";
-	File f = new File("./" + path);
-	if(f.exists() && !f.isDirectory()) {
-	    main.setFileApplicationContextUri("./" + path);
-	} else {
-	    main.setApplicationContextUri("routes/chimera-route.xml");
-	}
-	main.run(args);
+        // use Camels Main class
+        Main main = new Main(MyApplication.class);
+        // now keep the application running until the JVM is terminated (ctrl + c or sigterm)
+        main.run(args);
+
     }
 
 }

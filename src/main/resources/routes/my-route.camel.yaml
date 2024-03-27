@@ -1,0 +1,28 @@
+- route:
+    id: route-481d
+    nodePrefixId: route-a55
+    from:
+      id: from-ff7a
+      uri: graph://get
+      steps:
+        - log:
+            message: "test"
+        - to:
+            id: to-5006
+            uri: graph://add
+            parameters:
+              chimeraResource: "#bean:triples"
+        - to:
+            id: to-ddcb
+            uri: graph://dump
+            parameters:
+              basePath: './'
+              filename: 'dump'
+              dumpFormat: 'turtle'              
+- beans:
+    - constructors: {}
+      name: triples
+      properties:
+        url: file://src/main/resources/routes/test.ttl
+        serializationFormat: turtle
+      type: com.cefriel.util.ChimeraResourceBean

@@ -20,128 +20,86 @@ limitations under the License.
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>com.cefriel</groupId>
-  <artifactId>chimera-tutorial</artifactId>
-  <version>3.0.1</version>
+  <version>1.0.0</version>
+  <artifactId>chimera-yaml</artifactId>
   <packaging>jar</packaging>
-  <name>Chimera tutorial</name>
-  <description>An example showing multiple Chimera routes</description>
+  <name>chimera-yaml</name>
+  <description>Example Chimera yaml route</description>
 
   <properties>
-    <category>Beginner</category>
-    <camel.version>3.16.0</camel.version>
-    <chimera.version>3.1.1</chimera.version>
-    <slf4j.version>1.7.25</slf4j.version>
+    <camel.version>4.4.1</camel.version>
+    <chimera.version>4.0.1</chimera.version>
+    <log4j2-version>2.22.0</log4j2-version>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <!-- Add Camel BOM -->
       <dependency>
-	<groupId>org.apache.camel</groupId>
-	<artifactId>camel-bom</artifactId>
-	<version>${camel.version}</version>
-	<type>pom</type>
-	<scope>import</scope>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-bom</artifactId>
+        <version>${camel.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <dependency>
-	<groupId>com.cefriel</groupId>
-	<artifactId>chimera</artifactId>
-	<version>${chimera.version}</version>
-	<type>pom</type>
-	<scope>import</scope>
+        <groupId>com.cefriel</groupId>
+        <artifactId>chimera</artifactId>
+        <version>${chimera.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
+
     <!-- use camel-main to bootstrap camel -->
-
-    <!-- spring xml dependency -->
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-spring-xml</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
-      <version>2.3.1</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-undertow</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-zip-deflater</artifactId>
-      <version>${camel.version}</version>
+      <artifactId>camel-main</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-zipfile</artifactId>
-      <version>${camel.version}</version>
+      <artifactId>camel-yaml-dsl</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-direct</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-seda</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-rest</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-spring-main</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.cefriel</groupId>
-      <artifactId>camel-chimera-graph</artifactId>
-      <version>${chimera.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.cefriel</groupId>
-      <artifactId>camel-chimera-mapping-template</artifactId>
-      <version>${chimera.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.cefriel</groupId>
-      <artifactId>camel-chimera-rmlmapper</artifactId>
-      <version>${chimera.version}</version>
-    </dependency>
-
 
     <!-- and we use these components -->
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-bean</artifactId>
+      <artifactId>camel-log</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.cefriel</groupId>
+      <artifactId>camel-chimera-graph</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.cefriel</groupId>
+      <artifactId>camel-chimera-mapping-template</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipse.rdf4j</groupId>
+      <artifactId>rdf4j-storage</artifactId>
+      <version>4.3.10</version>
+      <type>pom</type>
     </dependency>
 
     <!-- logging -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j-impl</artifactId>
-      <version>2.17.2</version>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j2-version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j2-impl</artifactId>
+      <version>${log4j2-version}</version>
+      <scope>runtime</scope>
     </dependency>
     <!-- for testing -->
     <dependency>
@@ -154,9 +112,18 @@ limitations under the License.
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-maven-plugin</artifactId>
+        <version>${camel.version}</version>
+        <configuration>
+          <!-- use built-in logging, instead of logback -->
+          <mainClass>com.cefriel.MyApplication</mainClass>
+        </configuration>
+      </plugin>
+      <plugin>
 	<groupId>org.apache.maven.plugins</groupId>
 	<artifactId>maven-shade-plugin</artifactId>
-	<version>3.2.4</version>
+	<version>3.2.1</version>
 	<executions>
 	  <execution>
 	    <phase>package</phase>
@@ -164,12 +131,15 @@ limitations under the License.
 	      <goal>shade</goal>
 	    </goals>
 	    <configuration>
-	      <finalName>chimera-tutorial</finalName>
-	      <shadedArtifactAttached>false</shadedArtifactAttached>
+	      <shadedArtifactAttached>true</shadedArtifactAttached>
+	      <shadedClassifierName>executable-jar</shadedClassifierName>
+	      <finalName>chimera-yaml</finalName>
 	      <transformers>
-		<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
 		<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-		  <mainClass>org.apache.camel.example.MyApplication</mainClass>
+		  <mainClass>com.cefriel.MyApplication</mainClass>
+		</transformer>
+		<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+		  <resource>META-INF/services/org/apache/camel/TypeConverterLoader</resource>
 		</transformer>
 	      </transformers>
 	      <filters>
@@ -186,27 +156,9 @@ limitations under the License.
 	  </execution>
 	</executions>
       </plugin>
-      <plugin>
-	<groupId>org.apache.camel</groupId>
-	<artifactId>camel-maven-plugin</artifactId>
-	<version>${camel.version}</version>
-	<configuration>
-	  <!-- use built-in logging, instead of logback -->
-	  <mainClass>org.apache.camel.example.MyApplication</mainClass>
-	</configuration>
-      </plugin>
     </plugins>
   </build>
 
-  <profiles>
-    <profile>
-      <id>camel.debug</id>
-      <activation>
-	<property>
-	  <name>camel.debug</name>
-	  <value>true</value>
-	</property>
-      </activation>
-    </profile>
-  </profiles>
+  
+
 </project>

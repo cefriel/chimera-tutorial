@@ -1,0 +1,3 @@
+* Chimera YAML
+
+Example of a Chimera [[./src/main/resources/routes/my-route.camel.yaml][route]] built using the Apache Camel YAML DSL.
