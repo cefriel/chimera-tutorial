@@ -1,3 +1,6 @@
 * Chimera YAML
 
-Example of a Chimera [[./src/main/resources/routes/my-route.camel.yaml][route]] built using the Apache Camel YAML DSL.
+Example of a Chimera [[./src/main/resources/routes/my-route.camel.yaml][route]] built using the Apache Camel YAML DSL.  The
+route in the example creates an empty graph, adds the RDF triples from
+the [[./src/main/resources/routes/test.ttl][test.ttl]] file to the graph and then dumps it to a file called
+/dump.ttl/.
