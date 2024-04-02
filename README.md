@@ -79,21 +79,13 @@ This section contains a brief overview of all the Chimera Components that are us
 The various Chimera components often require a file or resource to function. 
 An example is the Graph Add Component which adds the RDF triples found in a file to a RDF graph.
 
-Files and resources that are used in the chimera routes are defined through the ChimeraResource and ChimeraResources abstraction.
+Files and resources that are used in the chimera routes are defined through the ChimeraResource abstraction.
 For example, the resource needed by the Graph Add component is defined as follows:
 
 ```xml
-  <bean id="inputSource1" class="com.cefriel.util.ChimeraResourceBean">
+  <bean id="triples" class="com.cefriel.util.ChimeraResourceBean">
     <property name="url" value="file:///home/inbox/my-source.ttl"/>
     <property name="serializationFormat" value="turtle"></property>
-  </bean>
-  
-  <bean id="triples" class="com.cefriel.util.ChimeraResourcesBean">
-	<property name="resources">
-	  <list>
-	    <ref bean="inputSource1"/>
-	  </list>
-    </property>
   </bean>
 ```
 
@@ -102,37 +94,11 @@ These properties are the resource's *url* and *serializationFormat*.
 The *url* can either be a file (file://) url or a remote (http:// or https://) url.
 The *serializationFormat* is most often the extension of the resource.
 
-The ChimeraResource**s** abstraction is needed for those components that make use of possibly more than one resource.
-An example is the aforementioned Graph Add component which can add the triples contained in multiple files to the same RDF graph.
-
-An example of such a configuration (which is not used in this tutorial) is:
-
-```xml
-  <bean id="inputSource1" class="com.cefriel.util.ChimeraResourceBean">
-    <property name="url" value="file:///home/inbox/my-source1.ttl"/>
-    <property name="serializationFormat" value="turtle"></property>
-  </bean>
-  
-  <bean id="inputSource2" class="com.cefriel.util.ChimeraResourceBean">
-    <property name="url" value="file:///home/inbox/my-source2.ttl"/>
-    <property name="serializationFormat" value="turtle"></property>
-  </bean>
-
-  <bean id="triples" class="com.cefriel.util.ChimeraResourcesBean">
-	<property name="resources">
-	  <list>
-	    <ref bean="inputSource1"/>
-		<ref bean="inputSource2"/>
-	  </list>
-    </property>
-  </bean>
-```
-
 Resources can then be used by Chimera components by using the "#bean:bean_id" syntax in the Apache Camel uris.
 For example:
 
 ```xml
-<camel:to uri="graph://add?chimeraResources=#bean:triples"/>
+<camel:to uri="graph://add?chimeraResource=#bean:triples"/>
 ```
 
 - `Chimera RML component` 
@@ -141,7 +107,7 @@ For example:
 	In this tutorial it is configured as follows:
 
 	```xml
-	<camel:to uri="rml://?streamName=stops.txt&amp;mappings=#bean:rmlMappings&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
+	<camel:to uri="rml://?streamName=stops.txt&amp;mapping=#bean:rmlMappings&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
 	```
 	
 	Where the *streamName* option is the name of the inputStream file. 
@@ -161,28 +127,28 @@ For example:
    The Chimera Graph component Inference operation applies the inference rules specified in one or more ontology files to the RDF graph received as input.
    The ontologies are passed to the component via the chimeraResources parameter.
     ```xml
-	<camel:to uri="graph://inference?chimeraResources=#bean:ontologies"/>
+	<camel:to uri="graph://inference?chimeraResource=#bean:ontologies"/>
 	```
 
 - `Chimera Graph component Add operation` 
 
    The Chimera Graph component Add operation adds the triples from the files specified in the chimeraResources bean to the received RDF graph.
     ```xml
-	<camel:to uri="graph://add?chimeraResources=#bean:triples"/>
+	<camel:to uri="graph://add?chimeraResource=#bean:triples"/>
 	```
 
 - `Chimera Graph component Construct operation` 
 
    The Chimera Graph component Construct operation adds the triples obtained from the SPARQL construct queries specified in the chimeraResources bean to the received RDF graph.
     ```xml
-	<camel:to uri="graph://construct?chimeraResources=#bean:queries"/>
+	<camel:to uri="graph://construct?chimeraResource=#bean:queries"/>
 	```
 
 - `Chimera Graph component Shacl operation` 
 
    The Chimera Graph component Shacl operation validates the received RDF graph using the SHACL shapes specified in the chimeraResources bean parameter.
     ```xml
-	<camel:to uri="graph://shacl?chimeraResources=#bean:shaclShapes"/>
+	<camel:to uri="graph://shacl?chimeraResource=#bean:shaclShapes"/>
 	```
 
 - `Mapping Template component` 

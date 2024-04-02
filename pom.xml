@@ -23,15 +23,15 @@ limitations under the License.
 
   <groupId>com.cefriel</groupId>
   <artifactId>chimera-tutorial</artifactId>
-  <version>3.0.1</version>
+  <version>4.0.0</version>
   <packaging>jar</packaging>
   <name>Chimera tutorial</name>
   <description>An example showing multiple Chimera routes</description>
 
   <properties>
     <category>Beginner</category>
-    <camel.version>3.16.0</camel.version>
-    <chimera.version>3.1.1</chimera.version>
+    <camel.version>4.4.1</camel.version>
+    <chimera.version>4.0.1</chimera.version>
     <slf4j.version>1.7.25</slf4j.version>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
@@ -40,18 +40,18 @@ limitations under the License.
   <dependencyManagement>
     <dependencies>
       <dependency>
-	<groupId>org.apache.camel</groupId>
-	<artifactId>camel-bom</artifactId>
-	<version>${camel.version}</version>
-	<type>pom</type>
-	<scope>import</scope>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-bom</artifactId>
+        <version>${camel.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <dependency>
-	<groupId>com.cefriel</groupId>
-	<artifactId>chimera</artifactId>
-	<version>${chimera.version}</version>
-	<type>pom</type>
-	<scope>import</scope>
+        <groupId>com.cefriel</groupId>
+        <artifactId>chimera</artifactId>
+        <version>${chimera.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -68,7 +68,8 @@ limitations under the License.
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
-      <version>2.3.1</version>
+      <version>4.0.4</version>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -154,46 +155,46 @@ limitations under the License.
   <build>
     <plugins>
       <plugin>
-	<groupId>org.apache.maven.plugins</groupId>
-	<artifactId>maven-shade-plugin</artifactId>
-	<version>3.2.4</version>
-	<executions>
-	  <execution>
-	    <phase>package</phase>
-	    <goals>
-	      <goal>shade</goal>
-	    </goals>
-	    <configuration>
-	      <finalName>chimera-tutorial</finalName>
-	      <shadedArtifactAttached>false</shadedArtifactAttached>
-	      <transformers>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <finalName>chimera-tutorial</finalName>
+              <shadedArtifactAttached>false</shadedArtifactAttached>
+              <transformers>
 		<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
 		<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 		  <mainClass>org.apache.camel.example.MyApplication</mainClass>
 		</transformer>
-	      </transformers>
-	      <filters>
+              </transformers>
+              <filters>
 		<filter>
 		  <artifact>*:*</artifact>
 		  <excludes>
-		    <exclude>META-INF/*.SF</exclude>
-		    <exclude>META-INF/*.DSA</exclude>
-		    <exclude>META-INF/*.RSA</exclude>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
 		  </excludes>
 		</filter>
-	      </filters>
-	    </configuration>
-	  </execution>
-	</executions>
+              </filters>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
-	<groupId>org.apache.camel</groupId>
-	<artifactId>camel-maven-plugin</artifactId>
-	<version>${camel.version}</version>
-	<configuration>
-	  <!-- use built-in logging, instead of logback -->
-	  <mainClass>org.apache.camel.example.MyApplication</mainClass>
-	</configuration>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-maven-plugin</artifactId>
+        <version>${camel.version}</version>
+        <configuration>
+          <!-- use built-in logging, instead of logback -->
+          <mainClass>org.apache.camel.example.MyApplication</mainClass>
+        </configuration>
       </plugin>
     </plugins>
   </build>
@@ -202,10 +203,10 @@ limitations under the License.
     <profile>
       <id>camel.debug</id>
       <activation>
-	<property>
-	  <name>camel.debug</name>
-	  <value>true</value>
-	</property>
+        <property>
+          <name>camel.debug</name>
+          <value>true</value>
+        </property>
       </activation>
     </profile>
   </profiles>
