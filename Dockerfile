@@ -1,14 +1,14 @@
-FROM maven:3.8.3-openjdk-17 as builder
+FROM maven:3.9.6-eclipse-temurin-17 as builder
 
 WORKDIR /
-COPY . /usr/src/camel-yaml
+COPY . /usr/src/chimera-tutorial
 
 # Install example
-WORKDIR /usr/src/camel-yaml
+WORKDIR /usr/src/chimera-tutorial
 RUN mvn clean install -DskipTests
 
-FROM openjdk:17-jdk
-COPY --from=builder /usr/src/camel-yaml/target/chimera-tutorial.jar /home/chimera-tutorial.jar
+FROM eclipse-temurin:17
+COPY --from=builder /usr/src/chimera-tutorial/target/chimera-tutorial.jar /home/chimera-tutorial.jar
 COPY ./inbox/ /home/inbox/
 COPY ./mappings/ /home/mappings/
 COPY ./queries/ /home/queries/
