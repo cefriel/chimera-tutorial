@@ -11,9 +11,9 @@
 			   http://www.springframework.org/schema/util
 			   http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
-  <!-- SINGLE RESOURCES -->
+  <!-- RESOURCES -->
 
-  <bean id="inputSource1" class="com.cefriel.util.ChimeraResourceBean">
+  <bean id="triples" class="com.cefriel.util.ChimeraResourceBean">
     <property name="url" value="file:///home/inbox/my-source.ttl"/>
     <property name="serializationFormat" value="turtle"></property>
   </bean>
@@ -46,48 +46,6 @@
   <bean id="stopsShaclShape" class='com.cefriel.util.ChimeraResourceBean'>
     <property name='url' value= "file://home/shacl-shapes/gtfsStopShacl.ttl"/>
     <property name='serializationFormat' value= "turtle"/>
-  </bean>
-
-  <!-- LISTS OF RESOURCES -->
-
-  <bean id="triples" class="com.cefriel.util.ChimeraResourcesBean">
-    <property name="resources">
-      <list>
-	<ref bean="inputSource1"/>
-      </list>
-    </property>
-  </bean>
-
-  <bean id="queries" class="com.cefriel.util.ChimeraResourcesBean">
-    <property name="resources">
-      <list>
-	<ref bean="sparqlQuery"/>
-      </list>
-    </property>
-  </bean>
-
-  <bean id="ontologies" class="com.cefriel.util.ChimeraResourcesBean">
-    <property name="resources">
-      <list>
-	<ref bean="ontology"/>
-      </list>
-    </property>
-  </bean>
-
-  <bean id='rmlMappings' class='com.cefriel.util.ChimeraResourcesBean'>
-    <property name="resources">
-      <list>
-	<ref bean="rmlMapping"/>
-      </list>
-    </property>
-  </bean>
-
-  <bean id="shaclShapes" class='com.cefriel.util.ChimeraResourcesBean'>
-    <property name="resources">
-      <list>
-	<ref bean="stopsShaclShape"/>
-      </list>
-    </property>
   </bean>
 
   <bean class="org.apache.camel.dataformat.zipfile.ZipSplitter" id="zip_splitter"/>
@@ -134,7 +92,7 @@
 
     <camel:route id="inferenceRoute">
       <camel:from uri="direct:inference"/>
-      <camel:to uri="graph://inference?chimeraResources=#bean:ontologies"/>
+      <camel:to uri="graph://inference?chimeraResource=#bean:ontology"/>
     </camel:route>
 
     <camel:route id="lift">
@@ -152,7 +110,7 @@
 	      </camel:setHeader>
 	      <camel:log loggingLevel="INFO" message="Converting ${file:name}"/>
 	      <!-- <log message="Exchange Contents before split: ${body}"/> -->
-	      <camel:to uri="rml://?streamName=stops.txt&amp;mappings=#bean:rmlMappings&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
+	      <camel:to uri="rml://?streamName=stops.txt&amp;mapping=#bean:rmlMapping&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
 	      <camel:to uri="direct:dump"/>
 
 	    </camel:when>
@@ -179,8 +137,8 @@
 	      </camel:setHeader>
 	      <camel:log loggingLevel="INFO" message="Converting ${file:name}"/>
 
-	      <camel:to uri="rml://?streamName=stops.txt&amp;mappings=#bean:rmlMappings&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
-	      <camel:to uri="graph://construct?chimeraResources=#bean:queries"/>
+	      <camel:to uri="rml://?streamName=stops.txt&amp;mapping=#bean:rmlMapping&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
+	      <camel:to uri="graph://construct?chimeraResource=#bean:sparqlQuery"/>
 	      <camel:to uri="direct:dump"/>
 
 	    </camel:when>
@@ -207,7 +165,7 @@
 	      </camel:setHeader>
 	      <camel:log loggingLevel="INFO" message="Converting ${file:name}"/>
 
-	      <camel:to uri="rml://?streamName=stops.txt&amp;mappings=#bean:rmlMappings&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
+	      <camel:to uri="rml://?streamName=stops.txt&amp;mapping=#bean:rmlMapping&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
 	      <camel:to uri="direct:lowerToCsv"/>
 	    </camel:when>
 	    <camel:otherwise>
@@ -233,8 +191,8 @@
 	      </camel:setHeader>
 	      <camel:log loggingLevel="INFO" message="Converting ${file:name}"/>
 
-	      <camel:to uri="rml://?streamName=stops.txt&amp;mappings=#bean:rmlMappings&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
-	      <camel:to uri="graph://add?chimeraResources=#bean:triples"/>
+	      <camel:to uri="rml://?streamName=stops.txt&amp;mapping=#bean:rmlMapping&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
+	      <camel:to uri="graph://add?chimeraResource=#bean:triples"/>
 	      <camel:to uri="direct:lowerToCsv"/>
 
 	    </camel:when>
@@ -261,8 +219,8 @@
 	      </camel:setHeader>
 	      <camel:log loggingLevel="INFO" message="Converting ${file:name}"/>
 
-	      <camel:to uri="rml://?streamName=stops.txt&amp;mappings=#bean:rmlMappings&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
-	      <camel:to uri="graph://inference?chimeraResources=#bean:ontologies"/>
+	      <camel:to uri="rml://?streamName=stops.txt&amp;mapping=#bean:rmlMapping&amp;baseIri=https://www.cefriel.com/data/&amp;baseIriPrefix=cef"/>
+	      <camel:to uri="graph://inference?chimeraResource=#bean:ontology"/>
 	      <camel:to uri="direct:lowerToCsv"/>
 
 	    </camel:when>
@@ -291,7 +249,7 @@
 
 	      <camel:to uri="mapt://csv?template=#bean:liftingTemplate&amp;format=turtle"/>
 	      <camel:to uri="graph://get?rdfFormat=turtle"/>
-	      <camel:to uri="graph://shacl?chimeraResources=#bean:shaclShapes"/>
+	      <camel:to uri="graph://shacl?chimeraResource=#bean:stopsShaclShape"/>
 	      <camel:to uri="direct:lowerToCsv"/>
 
 	    </camel:when>
