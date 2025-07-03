@@ -182,3 +182,9 @@ docker run -p 8888:8888 cefriel/chimera:tutorial
 ```
 
 Run the desired route by using the [tutorial.sh](./tutorial.sh) file which takes the name of the route as a paremeter (`lift`, `liftConstruct`, `roundtrip`, `roundtripAdd`, `roundtripInference`, `roundtripTemplate`).
+
+## Contributing
+
+Before contributing, please read carefully, complete and sign our [Contributor Licence Agreement](https://github.com/cefriel/contributing/blob/main/contributor-license-agreement.pdf). 
+
+When contributing to this repository, please first discuss the change you wish to make via issue or any other available method with the repository's owners.
